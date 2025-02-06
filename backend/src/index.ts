@@ -4,10 +4,14 @@ import { signupSchemaType } from "./types/signupTypes";
 import { User } from "./models/userSchema";
 import { signinSchemaType } from "./types/signinTypes";
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
+import cookieParser from "cookie-parser"
+import { authMiddleware, CustomRequest } from "./middlewares/authMidlleware";
 const app = express();
 
 const PORT = 1100;
 app.use(express.json());
+app.use(cookieParser())
 
 app.post("/signup", async(req, res) => {
   // const body = req.body;
@@ -37,16 +41,22 @@ app.post("/signup", async(req, res) => {
           imgUrl:req.body.imgUrl
         });
         await newUser.save();
-
-        res.status(200).json({msg:"User created successfully",newUser});
+        const token = jwt.sign({_id:newUser._id}, process.env.JWT_SECRET as string,{expiresIn:"1h"})
+        res.cookie("token",token, {expires: new Date(Date.now() + 1 * 3600000)});
+        res.status(200).json({msg:"User created successfully"});
       }
     
-    } catch (error:any) {
-        console.error(error.message);
-        res.status(400).json("Sign-up failed " + error.message);
+    } catch (error) {
+        if(error instanceof Error){
+          console.error(error.message);
+          res.status(400).json("Sign-up failed " + error.message);
+        }
+        else{
+          console.error("An Unknown error from /sign-up")
+        }
     }
   }
-})
+});
 
 app.post("/signin", async(req, res) => {
 
@@ -66,7 +76,9 @@ app.post("/signin", async(req, res) => {
           user.password
         );
         if(isMatch){
-          res.json({msg:"Login successfully",user});
+          const token = jwt.sign({_id:user._id}, process.env.JWT_SECRET as string)
+          res.cookie("token",token, {expires: new Date(Date.now() + 1 * 3600000)});
+          res.json({msg:"Login successfully"});
         }
         else{
             throw new Error("Password is incorrect")
@@ -75,12 +87,39 @@ app.post("/signin", async(req, res) => {
       else{
         res.json({msg:"User does not exist"})
       }
-    } catch (error:any) {
-        console.error(error.message);
-        res.status(400).json("Sign-in failed " + error.message);
+    } catch (error) {
+        if(error instanceof Error){
+          console.error(error.message);
+          res.status(400).json("Sign-in failed " + error.message);
+        }
+        else{
+          console.error("An Unknown error from /sign-in")
+        }
     }
   }
-})
+});
+
+app.get("/profile", authMiddleware,async(req:CustomRequest, res) => {
+  const {_id} = req.decoded || {};
+  try {
+    if(!_id){
+      throw new Error("Invalid user Id "+_id)
+    }
+    const user = await User.findById(_id);
+    if(!user){
+      throw new Error("user not found");
+    }
+    res.json({"User Details":user})
+  } catch (error) {
+      if(error instanceof Error){
+        console.error(error.message);
+        res.status(400).json("Sign-in failed " + error.message);
+      }
+      else{
+        console.error("An Unknown error from: GET /profile")
+      }
+  }
+});
 
 
 connectDB().then(() => {
