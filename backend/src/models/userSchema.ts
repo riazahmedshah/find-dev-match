@@ -1,4 +1,4 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document, Model } from "mongoose";
 
 interface userProps extends Document{
   firstName:string,
@@ -53,4 +53,5 @@ const userSchma = new mongoose.Schema<userProps>({
 }
 );
 
-export const User = mongoose.model("User", userSchma);
+
+export const User:Model<userProps> = mongoose.model<userProps>("User", userSchma);
