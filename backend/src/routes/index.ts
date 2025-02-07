@@ -5,5 +5,5 @@ import { profileRouter } from "./profileRouter"
 export const mainRouter = express.Router();
 
 
-mainRouter.use("/user",authRouter);
+mainRouter.use("/auth",authRouter);
 mainRouter.use("/profile",profileRouter);
