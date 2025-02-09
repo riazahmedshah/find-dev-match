@@ -16,9 +16,7 @@ connectionRouter.post("/send/:status/:toUserId", authMiddleware ,async(req:Custo
 
     try {
         const toUserId = data?.toUserId;
-        console.log("Received toUserId:", toUserId); 
         const status = data?.status;
-        console.log("Received status:", status); 
         if(!success){
             throw new Error("Invalid Inputs")
         }
