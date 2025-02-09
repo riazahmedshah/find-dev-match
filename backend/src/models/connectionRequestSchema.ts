@@ -19,7 +19,7 @@ const connectRequestSchema = new mongoose.Schema<connectRequestProps>({
   status:{
     type:String,
     enum:{
-      values:["interested","ignored"],
+      values:["interested","ignored","acepted","rejected"],
       message:'validator failed  with value `{VALUE}`'
     }
   }
