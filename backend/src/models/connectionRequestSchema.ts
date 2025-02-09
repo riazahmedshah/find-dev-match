@@ -25,6 +25,8 @@ const connectRequestSchema = new mongoose.Schema<connectRequestProps>({
   }
 });
 
+connectRequestSchema.index({fromUserId:1 ,toUserId: 1});
+
 connectRequestSchema.pre("save", function(next){
   const request = this
   if(request.fromUserId.equals(request.toUserId)){
