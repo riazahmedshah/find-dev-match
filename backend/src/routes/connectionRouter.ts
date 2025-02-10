@@ -55,7 +55,7 @@ connectionRouter.post("/send/:status/:toUserId", authMiddleware ,async(req:Custo
 
 })
 
-connectionRouter.post("/review/:status/:requestId", authMiddleware, async(req:CustomRequest,res) => {
+connectionRouter.patch("/review/:status/:requestId", authMiddleware, async(req:CustomRequest,res) => {
     const userId = req.decoded?._id;
 
     const {success, data} = reviewRequestTypes.safeParse(req.params);
@@ -66,19 +66,25 @@ connectionRouter.post("/review/:status/:requestId", authMiddleware, async(req:Cu
         const status = data.status
         const requestId = data.requestId
 
-        const findRequest = await ConnectionRequest.findOne({
-            status: "intersted",
+        const findRequestANdUpdate = await ConnectionRequest.findOneAndUpdate({
+            _id: requestId,
             toUserId: userId,
-            requestId
-        });
-
-        res.json({Requests:findRequest});
+            status: "interested",
+        },{
+            status:status
+        },{returnDocument: "after"});
+        if(!findRequestANdUpdate){
+            throw new Error("requsest not found")
+        }
+        else{
+            res.json({message:"Connection request "+ status, findRequestANdUpdate})
+        }
     } catch (error) {
         if(error instanceof zod.ZodError){
             res.json({ZodError:error})
         };
         if(error instanceof Error){
-            res.json({ErrorMessage: error})
+            res.json({ErrorMessage: error.message})
         }
         else{
             res.json({ErrorMessage:"Unknown error at POST /review/:status/:requestId"})
