@@ -9,9 +9,21 @@ userRouter.get("/connections",authMiddleware ,async(req:CustomRequest, res) => {
 
   try {
     const connections = await ConnectionRequest.find({
-      toUserId: userId,
-      status:"accepted"
-    }).populate("fromUserId", ["firstName", "lastName","gender","imgUrl","skills","age"]);
+      $or:[
+        {toUserId: userId,status:"accepted"},
+        {fromUserId: userId,status:"accepted"},
+      ] 
+    }).populate("fromUserId", ["firstName", "lastName","gender","imgUrl","skills","age"]).populate("toUserId", ["firstName", "lastName","gender","imgUrl","skills","age"]);
+
+    const data = connections.map((row) => {
+      if(row.fromUserId._id.equals(userId)){
+        return row.toUserId
+      }
+      else{
+        return row.fromUserId
+      }
+      // row.fromUserId
+    })
 
     if(!connections){
       throw new Error("No Connection found!")
@@ -19,7 +31,7 @@ userRouter.get("/connections",authMiddleware ,async(req:CustomRequest, res) => {
     if(connections.length < 1){
       res.json({message:"No Pending Requests!"})
     } else{
-      res.json({message: connections})
+      res.json({data: data})
     }
 
   } catch (error) {

@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import mongoose from "mongoose";
 
 
 export interface CustomRequest extends Request {
-  decoded?: { _id: string }; 
+  decoded?: { _id:  mongoose.Types.ObjectId; }; 
 }
 
 interface DecodedToken extends JwtPayload {
-  _id: string;
+  _id: mongoose.Types.ObjectId;
 }
  
 
