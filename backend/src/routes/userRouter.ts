@@ -1,6 +1,7 @@
 import express from "express"
 import { authMiddleware, CustomRequest } from "../middlewares/authMidlleware";
 import { ConnectionRequest } from "../models/connectionRequestSchema";
+import { User } from "../models/userSchema";
 
 export const userRouter = express.Router();
 
@@ -61,4 +62,18 @@ userRouter.get("/requests-recieved", authMiddleware,async(req:CustomRequest, res
     (error instanceof Error) ? res.json({message: error.message}) : "UnknownError at GET /request-recieved" 
   }
 });
+
+userRouter.get("/feed", authMiddleware, async(req:CustomRequest,res) => {
+    const userId = req.decoded?._id
+    try {
+      const feed = await User.find({
+        _id: { $ne:userId }
+      },["firstName", "lastName", "imgUrl"]);
+      res.json({data: feed});
+    } catch (error) {
+      (error instanceof Error) ? res.json({message: error.message}) : "UnknownError at GET /feed" 
+    }
+
+  
+})
 
