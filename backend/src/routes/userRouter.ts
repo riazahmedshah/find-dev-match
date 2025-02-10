@@ -44,7 +44,6 @@ userRouter.get("/connections",authMiddleware ,async(req:CustomRequest, res) => {
 
 userRouter.get("/requests-recieved", authMiddleware,async(req:CustomRequest, res) => {
   const userId = req.decoded?._id
-
   try {
     const recievedReq = await ConnectionRequest.find({
       toUserId: userId,
@@ -67,6 +66,10 @@ userRouter.get("/requests-recieved", authMiddleware,async(req:CustomRequest, res
 
 userRouter.get("/feed", authMiddleware, async(req:CustomRequest,res) => {
     const userId = req.decoded?._id
+    const skip = Number(req.query.skip) || 1;
+    let limit = Number(req.query.limit) || 10;
+
+  limit = limit > 50 ? 50 : limit
     try {
       const connections = await ConnectionRequest.find({
         $or: [
@@ -89,7 +92,7 @@ userRouter.get("/feed", authMiddleware, async(req:CustomRequest,res) => {
           {_id: {$nin: Array.from(hideFromFeed)}},
           {_id: {$ne: userId}}
         ]
-      }).select(USER_SAVE_DATA);
+      }).select(USER_SAVE_DATA).skip(skip).limit(limit);
 
       res.json({data: feed});
     } catch (error) {
