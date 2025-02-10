@@ -66,18 +66,18 @@ connectionRouter.patch("/review/:status/:requestId", authMiddleware, async(req:C
         const status = data.status
         const requestId = data.requestId
 
-        const findRequestANdUpdate = await ConnectionRequest.findOneAndUpdate({
+        const findRequestAndUpdate = await ConnectionRequest.findOneAndUpdate({
             _id: requestId,
             toUserId: userId,
             status: "interested",
         },{
             status:status
         },{returnDocument: "after"});
-        if(!findRequestANdUpdate){
+        if(!findRequestAndUpdate){
             throw new Error("requsest not found")
         }
         else{
-            res.json({message:"Connection request "+ status, findRequestANdUpdate})
+            res.json({message:"Connection request "+ status, findRequestAndUpdate})
         }
     } catch (error) {
         if(error instanceof zod.ZodError){
