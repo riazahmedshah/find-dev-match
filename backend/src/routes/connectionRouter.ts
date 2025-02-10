@@ -9,8 +9,7 @@ export const connectionRouter = express.Router();
 
 
 connectionRouter.post("/send/:status/:toUserId", authMiddleware ,async(req:CustomRequest,res) => {
-    const fromUserId = req.decoded?._id;
-    console.log("Received params:", req.params); 
+    const fromUserId = req.decoded?._id; 
 
     const {success, data} = connectRequestTypes.safeParse(req.params);
 

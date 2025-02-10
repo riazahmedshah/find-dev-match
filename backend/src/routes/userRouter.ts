@@ -5,6 +5,8 @@ import { User } from "../models/userSchema";
 
 export const userRouter = express.Router();
 
+const USER_SAVE_DATA = ["firstName", "lastName","gender","imgUrl","skills","age"]
+
 userRouter.get("/connections",authMiddleware ,async(req:CustomRequest, res) => {
   const userId = req.decoded?._id
 
@@ -14,7 +16,7 @@ userRouter.get("/connections",authMiddleware ,async(req:CustomRequest, res) => {
         {toUserId: userId,status:"accepted"},
         {fromUserId: userId,status:"accepted"},
       ] 
-    }).populate("fromUserId", ["firstName", "lastName","gender","imgUrl","skills","age"]).populate("toUserId", ["firstName", "lastName","gender","imgUrl","skills","age"]);
+    }).populate("fromUserId", USER_SAVE_DATA).populate("toUserId", USER_SAVE_DATA);
 
     const data = connections.map((row) => {
       if(row.fromUserId._id.equals(userId)){
@@ -47,7 +49,7 @@ userRouter.get("/requests-recieved", authMiddleware,async(req:CustomRequest, res
     const recievedReq = await ConnectionRequest.find({
       toUserId: userId,
       status:"interested"
-    }).populate("fromUserId", ["firstName", "lastName","gender","imgUrl","skills","age"]);
+    }).populate("fromUserId", USER_SAVE_DATA);
 
     if(!recievedReq){
       throw new Error("No Requests found!")
@@ -66,9 +68,29 @@ userRouter.get("/requests-recieved", authMiddleware,async(req:CustomRequest, res
 userRouter.get("/feed", authMiddleware, async(req:CustomRequest,res) => {
     const userId = req.decoded?._id
     try {
+      const connections = await ConnectionRequest.find({
+        $or: [
+          {fromUserId: userId},
+          {toUserId: userId}
+        ]
+      }).select("fromUserId toUserId");
+
+      const hideFromFeed = new Set();
+
+      connections.forEach((req) => {
+        hideFromFeed.add(req.fromUserId.toString());
+        hideFromFeed.add(req.toUserId.toString());
+      });
+
+      //console.log(hideFromFeed);
+
       const feed = await User.find({
-        _id: { $ne:userId }
-      },["firstName", "lastName", "imgUrl"]);
+        $and: [
+          {_id: {$nin: Array.from(hideFromFeed)}},
+          {_id: {$ne: userId}}
+        ]
+      }).select(USER_SAVE_DATA);
+
       res.json({data: feed});
     } catch (error) {
       (error instanceof Error) ? res.json({message: error.message}) : "UnknownError at GET /feed" 
