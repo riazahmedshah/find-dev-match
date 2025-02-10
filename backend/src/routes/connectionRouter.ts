@@ -1,6 +1,6 @@
 import express from "express";
 import { authMiddleware, CustomRequest } from "../middlewares/authMidlleware";
-import { connectRequestTypes } from "../types/connectionRequestTypes";
+import { connectRequestTypes, reviewRequestTypes } from "../types/connectionRequestTypes";
 import { ConnectionRequest } from "../models/connectionRequestSchema";
 import { User } from "../models/userSchema";
 import zod from "zod"
@@ -53,4 +53,35 @@ connectionRouter.post("/send/:status/:toUserId", authMiddleware ,async(req:Custo
         }
     }
 
+})
+
+connectionRouter.post("/review/:status/:requestId", authMiddleware, async(req:CustomRequest,res) => {
+    const userId = req.decoded?._id;
+
+    const {success, data} = reviewRequestTypes.safeParse(req.params);
+    try {
+        if(!success){
+            throw new Error("Invalid Input types");
+        };
+        const status = data.status
+        const requestId = data.requestId
+
+        const findRequest = await ConnectionRequest.findOne({
+            status: "intersted",
+            toUserId: userId,
+            requestId
+        });
+
+        res.json({Requests:findRequest});
+    } catch (error) {
+        if(error instanceof zod.ZodError){
+            res.json({ZodError:error})
+        };
+        if(error instanceof Error){
+            res.json({ErrorMessage: error})
+        }
+        else{
+            res.json({ErrorMessage:"Unknown error at POST /review/:status/:requestId"})
+        }
+    }
 })
