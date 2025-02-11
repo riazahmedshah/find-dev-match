@@ -1,4 +1,4 @@
-import express from "express"
+import express, { Request, Response } from "express"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { signupSchemaType } from "../types/signupTypes";
@@ -7,13 +7,19 @@ import { signinSchemaType } from "../types/signinTypes";
 
 export const authRouter = express.Router();
 
+interface SignupResponse {
+  message?: string;
+  errors?: any
+  Error?: string;
+};
 
-authRouter.post("/signup", async(req, res) => {
+
+authRouter.post("/signup", async(req, res:Response<SignupResponse>) : Promise<void> => {
   // const body = req.body;
   const {success, error} = signupSchemaType.safeParse(req.body);
 
   if(!success){
-    res.send({msg:"Invalid Inputs", errors:error.errors});
+    res.json({message:"Invalid Inputs", errors:error.errors});
   }
   else{
     try {
@@ -21,7 +27,9 @@ authRouter.post("/signup", async(req, res) => {
         email: req?.body.email
       });
       if(user){
-        throw new Error("User alredy exist with this email "+user.email);
+        res.status(400).json({Error:"User alredy exist with this email"});
+        // return;
+        // throw new Error("User alredy exist with this email "+user.email);
       }
       else{
         const hashedPassword = await bcrypt.hash(req.body.password,5)
@@ -38,13 +46,13 @@ authRouter.post("/signup", async(req, res) => {
         await newUser.save();
         const token = jwt.sign({_id:newUser._id}, process.env.JWT_SECRET as string,{expiresIn:"1h"})
         res.cookie("token",token, {expires: new Date(Date.now() + 1 * 3600000)});
-        res.status(200).json({msg:"User created successfully"});
+        res.status(200).json({message:"User created successfully"});
       }
     
     } catch (error) {
         if(error instanceof Error){
           console.error(error.message);
-          res.status(400).json("Sign-up failed " + error.message);
+          res.status(400).json({Error: error.message});
         }
         else{
           console.error("An Unknown error from /sign-up")
@@ -98,5 +106,5 @@ authRouter.post("/signin", async(req, res) => {
 authRouter.post("/logout" ,async(req,res) => {
   res.cookie("token", null, {
     expires: new Date(Date.now())
-  }).send("successfully logout")
+  }).json("successfully logout")
 })
