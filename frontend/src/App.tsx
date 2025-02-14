@@ -1,15 +1,18 @@
-import { Appbar } from './components/daisiui/Appbar'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './index.css'
+import Body from './components/Body'
+import Profile from './components/Profile'
 
 function App() {
 
   return (
-    <div>
-      <Appbar/>
-      <h1 className="btn">
-        Hello world!
-    </h1>
-    </div>
+    <BrowserRouter basename='/'>
+      <Routes>
+        <Route path='/' element={<Body/>}>
+          <Route path='/profile' element={<Profile/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
