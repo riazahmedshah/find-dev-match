@@ -3,12 +3,17 @@ import axios from "axios";
 
 import { useState } from "react";
 import { SigninSchemaType } from "../types/signinTypes";
+import { useAppDispatch } from "../hook";
+import { useNavigate } from "react-router-dom";
+import { addUser } from "../features/user/userSlice";
 
 const Signin = () => {
   const [postInputs, setPostInputs] = useState<SigninSchemaType>({
     email:"test03@gmail.com",
     password:"123456",
-  })
+  });
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleSignin = async() => {
     const res = await axios.post("http://localhost:1100/auth/signin",postInputs,{
@@ -16,6 +21,8 @@ const Signin = () => {
     });
 
     console.log(res.data);
+    dispatch(addUser(res.data));
+    navigate("/");
   }
 
   return (
