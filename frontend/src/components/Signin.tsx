@@ -11,9 +11,7 @@ const Signin = () => {
   })
 
   const handleSignin = async() => {
-    const res = await axios.post("http://localhost:1100/auth/signin",{
-      postInputs
-    },{
+    const res = await axios.post("http://localhost:1100/auth/signin",postInputs,{
       withCredentials:true
     });
 
