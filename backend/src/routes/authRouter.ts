@@ -7,6 +7,9 @@ import { signinSchemaType } from "../types/signinTypes";
 
 export const authRouter = express.Router();
 
+const USER_SAVE_DATA = ["skills","age"]
+
+
 interface SignupResponse {
   message?: string;
   errors?: any
@@ -82,7 +85,17 @@ authRouter.post("/signin", async(req, res) => {
         if(isMatch){
           const token = jwt.sign({_id:user._id}, process.env.JWT_SECRET as string)
           res.cookie("token",token, {expires: new Date(Date.now() + 1 * 3600000)});
-          res.json({msg:"Login successfully"});
+          const userData = {
+            userId:user._id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName:user.lastName,
+            gender:user.gender,
+            imgUrl:user.imgUrl,
+            age:user.age,
+            skills:user.skills
+          }
+          res.json({msg:"Login successfully", userData});
         }
         else{
             throw new Error("Password is incorrect")
