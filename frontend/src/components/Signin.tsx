@@ -1,10 +1,9 @@
-
 import axios from "axios";
-
 import { useState } from "react";
 import { SigninSchemaType } from "../types/signinTypes";
-import { useAppDispatch } from "../hook";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
+import { useAppDispatch, useAppSelector } from "../hook";
 import { addUser } from "../features/user/userSlice";
 
 const Signin = () => {
@@ -12,17 +11,27 @@ const Signin = () => {
     email:"test03@gmail.com",
     password:"123456",
   });
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch()
+  const user = useAppSelector((store) => store.user)
   const handleSignin = async() => {
-    const res = await axios.post("http://localhost:1100/auth/signin",postInputs,{
-      withCredentials:true
-    });
+    try {
+      const res = await axios.post(BASE_URL + "/auth/signin",postInputs,{
+        withCredentials:true
+      });
+      dispatch(addUser(res.data));
+      navigate("/");
+    } catch (error) {
+      if(error instanceof Error){
+        console.error(error)
+      } else{
+        console.log("Unknown error happen, try again!")
+      }
+    }
+  }
 
-    console.log(res.data);
-    dispatch(addUser(res.data));
-    navigate("/");
+  if(user){
+    navigate("/")
   }
 
   return (
