@@ -16,7 +16,17 @@ profileRouter.get("/view", authMiddleware,async(req:CustomRequest, res) => {
     if(!user){
       throw new Error("user not found");
     }
-    res.json({"User Details":user})
+    const userData = {
+      userId:user._id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName:user.lastName,
+      gender:user.gender,
+      imgUrl:user.imgUrl,
+      age:user.age,
+      skills:user.skills
+    }
+    res.json({userData})
   } catch (error) {
       if(error instanceof Error){
         console.error(error.message);
