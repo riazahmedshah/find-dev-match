@@ -25,7 +25,7 @@ const Signin = () => {
       if(error instanceof Error){
         console.error(error)
       } else{
-        console.log("Unknown error happen, try again!")
+        console.log("Unknown error happened, try again!")
       }
     }
   }

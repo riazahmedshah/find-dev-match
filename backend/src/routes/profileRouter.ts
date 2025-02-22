@@ -30,7 +30,7 @@ profileRouter.get("/view", authMiddleware,async(req:CustomRequest, res) => {
   } catch (error) {
       if(error instanceof Error){
         console.error(error.message);
-        res.status(400).json("Sign-in failed " + error.message);
+        res.status(400).json({"Sign-in failed ":error.message});
       }
       else{
         console.error("An Unknown error from: GET /profile")

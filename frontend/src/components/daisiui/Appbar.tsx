@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom"
+import { useAppSelector } from "../../hook"
 
 export const Appbar = () => {
+  // const handleLogout = async() =>{
+  //   await axios.post(BASE_URL+"/auth/logout");
+  // } 
+  const user = useAppSelector((store) => store.user)
   return(
     <div className="navbar bg-base-200 px-4 py-1">
   <div className="flex-1">
@@ -12,10 +17,11 @@ export const Appbar = () => {
     </div>
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
-          <img
+        <div className="w-10 bg-black rounded-full">
+          <h1 className="text-white">{user.data?.firstName?.charAt(1) || "Login"}</h1>
+          {/* <img
             alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            src={user.} /> */}
         </div>
       </div>
       <ul
@@ -28,7 +34,7 @@ export const Appbar = () => {
           </Link>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li>logout</li>
       </ul>
     </div>
   </div>

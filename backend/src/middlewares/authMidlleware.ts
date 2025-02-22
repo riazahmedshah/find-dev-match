@@ -29,7 +29,7 @@ export const authMiddleware = async(req:CustomRequest,res:Response,next:NextFunc
   } catch (error) {
     if (error instanceof Error) {
       console.error("ERROR: "+error.message);
-      res.json({msg:error.message})
+      res.status(400).json({msg:error.message});
     } else {
       console.error("An unknown error occurred");
     }
