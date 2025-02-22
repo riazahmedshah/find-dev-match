@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SigninSchemaType } from "../types/signinTypes";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
@@ -23,16 +23,19 @@ const Signin = () => {
       navigate("/");
     } catch (error) {
       if(error instanceof Error){
-        console.error(error)
+        console.error(error);
+        navigate("/login");
       } else{
         console.log("Unknown error happened, try again!")
       }
     }
   }
 
-  if(user){
-    navigate("/")
-  }
+  useEffect(() => {
+    if (user.data?.userData) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <div className="h-screen flex justify-center items-center bg-base-300">

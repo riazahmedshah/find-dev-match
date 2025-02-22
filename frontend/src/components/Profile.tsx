@@ -1,6 +1,10 @@
+import Tindercard from "./TinderCard"
+
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <div className="h-screen flex justify-center items-center">
+      <Tindercard />
+    </div>
   )
 }
 

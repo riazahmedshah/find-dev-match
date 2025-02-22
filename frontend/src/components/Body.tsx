@@ -2,18 +2,18 @@ import { Outlet, useNavigate } from "react-router-dom"
 import { Appbar } from "./daisiui/Appbar"
 import axios from "axios"
 import { BASE_URL } from "../utils/constants"
-import { useAppDispatch } from "../hook"
+import { useAppDispatch, useAppSelector } from "../hook"
 import { addUser } from "../features/user/userSlice"
 import { useCallback, useEffect } from "react"
 
 const Body = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch();
-  //const user = useAppSelector((store) => store.user)
+  const user = useAppSelector((store) => store.user)
   const fetchUser = useCallback( async() => {
     try {
       const res = await axios.get(BASE_URL+"/profile/view",{withCredentials:true});
-      console.log(res.data);
+      //console.log(res.data);
       dispatch(addUser(res.data));
     } catch (error) {
       if(error instanceof Error){
@@ -30,10 +30,14 @@ const Body = () => {
   useEffect(() => {
     fetchUser();
   },[fetchUser]);
+
+  useEffect(()=>{
+    if(!user.data?.userData){
+      navigate("/login");
+    }
+  },[navigate, user])
   
-  // if(!user.email){
-  //   navigate("/login");
-  // }
+  
   return (
     <div>
       <Appbar/>
