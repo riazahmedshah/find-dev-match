@@ -1,15 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UserData } from "../types";
 
-interface UserData {
-  userData:{userId?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  age?: number;
-  gender?: string;
-  imgUrl?: string;
-  skills?: string[];}
-}
+
 
 interface UserState {
   data: UserData | null;

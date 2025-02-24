@@ -6,7 +6,7 @@ const Card = () => {
     <div className="card shadow-sm">
       <figure>
         <img
-          className="w-[15rem] h-[18rem] rounded-b-2xl"
+          className="w-[15rem] h-[19rem] rounded-b-2xl"
           src={user?.imgUrl}
           alt="Shoes"
         />

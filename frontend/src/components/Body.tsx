@@ -12,6 +12,9 @@ const Body = () => {
   const user = useAppSelector((store) => store.user)
   const fetchUser = useCallback( async() => {
     try {
+      if(user.data?.userData){
+        return;
+      }
       const res = await axios.get(BASE_URL+"/profile/view",{withCredentials:true});
       //console.log(res.data);
       dispatch(addUser(res.data));
@@ -25,7 +28,7 @@ const Body = () => {
         console.log("Unkown error!")
       }
     }
-  },[dispatch, navigate]);
+  },[dispatch, navigate,user]);
 
   useEffect(() => {
     fetchUser();
