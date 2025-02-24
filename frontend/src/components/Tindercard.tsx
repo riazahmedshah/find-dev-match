@@ -15,8 +15,6 @@ const Tindercard = () => {
   return (
     <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['right', 'left']}>
       <Card/>
-      <Card/>
-      <Card/>
     </TinderCard>
   )
 }

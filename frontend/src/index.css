@@ -3,3 +3,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+  background-color: rgb(39, 39, 42); /* black */
+  color: #FFFFFF; /* white text color for better contrast */
+  height: 100vh; /* Ensures the body takes the full viewport height */
+  margin: 0; /* Removes default margin */
+}

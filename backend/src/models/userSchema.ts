@@ -8,7 +8,8 @@ interface userProps extends Document{
   age:number,
   gender:string,
   imgUrl:string,
-  skills:string[]
+  skills:string[],
+  about:string,
 }
 
 
@@ -46,6 +47,10 @@ const userSchma = new mongoose.Schema<userProps>({
   },
   skills:{
     type:[String]
+  },
+  about:{
+    type:String,
+    default:"This about section we need slightly modify our user schema so thet we can have about field over here, and this will look good in profile section or page"
   }
 },
 {

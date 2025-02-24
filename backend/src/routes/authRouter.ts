@@ -44,7 +44,8 @@ authRouter.post("/signup", async(req, res:Response<SignupResponse>) : Promise<vo
           gender:req.body.gender,
           age:req.body.age,
           skills:req.body.skills,
-          imgUrl:req.body.imgUrl
+          imgUrl:req.body.imgUrl,
+          about:req.body.about,
         });
         await newUser.save();
         const token = jwt.sign({_id:newUser._id}, process.env.JWT_SECRET as string,{expiresIn:"1h"})
@@ -93,7 +94,8 @@ authRouter.post("/signin", async(req, res) => {
             gender:user.gender,
             imgUrl:user.imgUrl,
             age:user.age,
-            skills:user.skills
+            skills:user.skills,
+            about:user.about,
           }
           res.json({userData});
         }

@@ -57,7 +57,8 @@ profileRouter.patch("/edit",authMiddleware, async(req:CustomRequest,res) => {
         gender:req.body.gender,
         age:req.body.age,
         skills:req.body.skills,
-        imgUrl:req.body.imgUrl
+        imgUrl:req.body.imgUrl,
+        about:req.body.about
       },{returnDocument:"after"});
       res.json({mag:"User Updated Successfylly",UpdatedUser})
     } catch (error) {
