@@ -38,19 +38,19 @@ const Signin = () => {
   }, [user, navigate]);
 
   return (
-    <div className="h-screen flex justify-center items-center bg-base-300">
-      <div className="card bg-base-200 w-96 shadow-xl">
+    <div className="h-screen flex justify-center items-center bg-gradient-to-r from-cyan-100 via-blue-300 to-indigo-400">
+      <div className="card bg-zinc-800 w-96 shadow-xl">
         <div className="card-body">
           <h2 className="card-title justify-center text-2xl font-bold">Sign In</h2>
           <div>
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text text-white">Email</span>
               </div>
               <input
                 type="text"
                 placeholder="Enter Email"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs bg-zinc-700"
                 value={postInputs.email}
                 onChange={(e) => {
                   setPostInputs({
@@ -62,12 +62,12 @@ const Signin = () => {
             </label>
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text text-white">Password</span>
               </div>
               <input
                 type="text"
                 placeholder="Enter password"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs bg-zinc-700"
                 value={postInputs.password}
                 onChange={(e) => setPostInputs({
                   ...postInputs,

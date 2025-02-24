@@ -44,7 +44,7 @@ export const Appbar = () => {
                   <li>
                     { location.pathname === "/profile" ? 
                       (
-                        <Link to="/profile/edit" className="justify-between">
+                        <Link to="/edit-profile" className="justify-between">
                           edit Profile
                         </Link>
                       ): (

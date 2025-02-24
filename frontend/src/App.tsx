@@ -5,6 +5,7 @@ import Profile from './components/Profile'
 import Signin from './components/Signin'
 import Feed from './components/Feed'
 import Home from './components/Home'
+import EditProfile from './components/EditProfile'
 
 function App() {
   
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<Body/>}>
           <Route path='/' element={<Home/>}/>
           <Route path='/profile' element={<Profile/>}/>
+          <Route path='/edit-profile' element={<EditProfile/>}/>
           <Route path='/feed' element={<Feed/>}/>
         </Route>
       </Routes>

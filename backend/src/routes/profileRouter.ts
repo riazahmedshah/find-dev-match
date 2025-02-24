@@ -1,7 +1,7 @@
 import express from "express"
 import { authMiddleware, CustomRequest } from "../middlewares/authMidlleware";
 import { User } from "../models/userSchema";
-import { updateProfileTypes } from "../types/updateProfile";
+import { updateProfileTypes } from "../types/updateProfileTypes";
 
 
 export const profileRouter = express.Router();
