@@ -39,7 +39,7 @@ const Profile = () => {
                 ))}
               </div>
               <h3 className="text-xl font-bold pb-1 pt-3">About me</h3>
-              <p className="max-w-[30rem]">This about section we need slightly modify our user schema so thet we can have about field over here, and this will look good in profile section or page</p>
+              <p className="max-w-[30rem]">{user?.about}</p>
             </div>
           </div>
         </div>

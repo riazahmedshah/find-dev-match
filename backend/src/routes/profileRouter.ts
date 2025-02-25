@@ -38,7 +38,7 @@ profileRouter.get("/view", authMiddleware,async(req:CustomRequest, res) => {
   }
 });
 
-profileRouter.patch("/edit",authMiddleware, async(req:CustomRequest,res) => {
+profileRouter.put("/edit",authMiddleware, async(req:CustomRequest,res) => {
   const {_id} = req.decoded || {};
 
   const {success, error} = updateProfileTypes.safeParse(req.body);
@@ -58,7 +58,7 @@ profileRouter.patch("/edit",authMiddleware, async(req:CustomRequest,res) => {
         age:req.body.age,
         skills:req.body.skills,
         imgUrl:req.body.imgUrl,
-        about:req.body.about
+        about:req.body.about,
       },{returnDocument:"after"});
       res.json({mag:"User Updated Successfylly",UpdatedUser})
     } catch (error) {

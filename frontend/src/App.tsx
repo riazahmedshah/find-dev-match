@@ -6,12 +6,14 @@ import Signin from './components/Signin'
 import Feed from './components/Feed'
 import Home from './components/Home'
 import EditProfile from './components/EditProfile'
+import Signup from './components/Signup'
 
 function App() {
   
   return (
     <BrowserRouter basename='/'>
       <Routes>
+        <Route path='/signup' element={<Signup/>}/>
         <Route path='/login' element={<Signin/>}/>
         <Route path='/' element={<Body/>}>
           <Route path='/' element={<Home/>}/>

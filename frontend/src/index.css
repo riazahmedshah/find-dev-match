@@ -6,8 +6,9 @@
 
 
 body {
-  background-color: rgb(39, 39, 42); /* black */
-  color: #FFFFFF; /* white text color for better contrast */
-  height: fit-content; /* Ensures the body takes the full viewport height */
-  margin: 0; /* Removes default margin */
+  background-color: rgb(39, 39, 42);
+  color: #FFFFFF;
+  min-height: 100vh; 
+  margin: 0;
+  overflow-x: hidden;
 }

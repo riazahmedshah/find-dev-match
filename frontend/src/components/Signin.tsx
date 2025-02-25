@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { SigninSchemaType } from "../types/signinTypes";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { useAppDispatch, useAppSelector } from "../hook";
 import { addUser } from "../features/user/userSlice";
@@ -74,6 +74,9 @@ const Signin = () => {
                   password:e.target.value})}
               />
             </label>
+            <p className="py-3 text-zinc-400">
+              Not registered yet? <Link to="/signup">Sign up</Link>           
+            </p>
           </div>
           <div className="card-actions w-full justify-center">
             <button 

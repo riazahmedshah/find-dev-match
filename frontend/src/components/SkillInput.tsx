@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useState } from 'react';
 
-export const SkillsInput = () => {
-  const [skills, setSkills] = useState(['']);
+export const SkillsInput = ({skill}:any) => {
+  const [skills, setSkills] = useState([skill]);
   
   const handleSkillChange = (index:number, value: string) => {
     const updatedSkills = [...skills];

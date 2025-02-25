@@ -7,7 +7,8 @@ export interface UserData {
     age?: number;
     gender?: string;
     imgUrl?: string;
-    skills?: string[]
+    skills?: string[];
+    about?: string;
   }
 }
 export interface FeedData{
