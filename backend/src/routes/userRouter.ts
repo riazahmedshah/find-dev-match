@@ -56,7 +56,7 @@ userRouter.get("/requests-recieved", authMiddleware,async(req:CustomRequest, res
     if(recievedReq.length < 1){
       res.json({message:"No Pending Requests!"})
     } else{
-      res.json({message: recievedReq})
+      res.json({recievedReq})
     }
   } catch (error) {
     (error instanceof Error) ? res.json({message: error.message}) : "UnknownError at GET /request-recieved" 

@@ -1,12 +1,11 @@
 import { connectionData } from "../../features/types";
 
 const ConnectionComponent = ({firstName,lastName,gender,age,imgUrl,skills} : connectionData) => {
-  console.log(imgUrl);
   
   return (
     <div className="">
-      <div className="user-list w-full max-w-lg mx-auto bg-zinc-950 rounded-xl shadow-xl flex flex-col space-x-4 py-4">
-        <div className="user-row flex flex-col items-center justify-between cursor-pointer  p-4 duration-300 sm:flex-row sm:py-4 sm:px-8 hover:bg-zinc-800">
+      <div className="user-list w-full max-w-md mx-auto bg-zinc-950 rounded-xl shadow-xl flex flex-col space-x-4 py-4">
+        <div className="user-row flex flex-col items-center space-between cursor-pointer  p-4 duration-300 sm:flex-row sm:py-4 sm:px-8 hover:bg-zinc-800">
           <div className="user flex items-center text-center flex-col sm:flex-row sm:text-left">
             <div className="avatar-content mb-2.5 sm:mb-0 sm:mr-2.5">
               <img
@@ -15,7 +14,7 @@ const ConnectionComponent = ({firstName,lastName,gender,age,imgUrl,skills} : con
                 src={imgUrl}
               />
             </div>
-            <div className="user-body flex flex-col mb-4 sm:mb-0 sm:mr-4">
+            <div className="user-body flex flex-col max-w-40 mb-4 sm:mb-0 sm:mr-4">
               <p className="title font-medium no-underline">
                 {firstName + " " + lastName}
               </p>

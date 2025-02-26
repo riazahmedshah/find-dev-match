@@ -3,6 +3,9 @@ import { useAppDispatch, useAppSelector } from "../../hook";
 import axios from "axios";
 import { BASE_URL } from "../../utils/constants";
 import { removeUser } from "../../features/user/userSlice";
+import { clearFeed } from "../../features/feed/feedSlice";
+import { clearConnections } from "../../features/connection/getConnectionSlice";
+import { clearRequests } from "../../features/connection/requsetSice";
 
 export const Appbar = () => {
   const user = useAppSelector((store) => store.user?.data?.userData);
@@ -12,6 +15,9 @@ export const Appbar = () => {
   const handleLogout = async() =>{
     await axios.post(BASE_URL+"/auth/logout",{},{withCredentials:true});
     dispatch(removeUser());
+    dispatch(clearFeed());
+    dispatch(clearConnections());
+    dispatch(clearRequests());
     navigate("/login");
   }
   return (

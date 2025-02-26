@@ -54,7 +54,6 @@ const ConnectionPage = () => {
         </div>
       ))}
     </div>
-    // <ConnectionComponent/>
   );
 };
 

@@ -33,3 +33,18 @@ export interface connectionData{
     skills?: string[];
     about?: string;
 }
+
+export interface requestData{
+  _id:string
+  fromUserId:{
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    gender?: string;
+    imgUrl?: string;
+    skills?: string[];
+    about?: string;
+  },
+  toUserId:string,
+  status:string,
+}

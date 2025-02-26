@@ -38,7 +38,7 @@ profileRouter.get("/view", authMiddleware,async(req:CustomRequest, res) => {
   }
 });
 
-profileRouter.put("/edit",authMiddleware, async(req:CustomRequest,res) => {
+profileRouter.patch("/edit",authMiddleware, async(req:CustomRequest,res) => {
   const {_id} = req.decoded || {};
 
   const {success, error} = updateProfileTypes.safeParse(req.body);

@@ -21,7 +21,7 @@ const EditProfile = () => {
     };
   
     try {
-      const res = await axios.put(
+      const res = await axios.patch(
         `${BASE_URL}/profile/edit`,payload,
         { withCredentials: true }
       );
