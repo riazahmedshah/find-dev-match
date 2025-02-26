@@ -95,13 +95,6 @@ const Signup = () => {
                       name="email"
                       placeholder="user@examaple.com"
                       className="input input-bordered w-full bg-zinc-700"
-                      //value={postInputs.email}
-                      onChange={() => {
-                        // setPostInputs({
-                        //   ...postInputs, 
-                        //   email:e.target.value
-                        // })
-                      }}
                     />
                   </label>
                   <label className="form-control w-full">
@@ -113,10 +106,6 @@ const Signup = () => {
                       name="password"
                       placeholder="123456"
                       className="input input-bordered w-full bg-zinc-700"
-                      //value={postInputs.password}
-                      // onChange={(e) => setPostInputs({
-                      //   ...postInputs,
-                      //   password:e.target.value})}
                     />
                   </label>
                 </div>
@@ -140,10 +129,6 @@ const Signup = () => {
                       name="age"
                       placeholder="Enter your age"
                       className="input input-bordered w-full bg-zinc-700"
-                      //value={postInputs.password}
-                      // onChange={(e) => setPostInputs({
-                      //   ...postInputs,
-                      //   password:e.target.value})}
                     />
                   </label>
                 </div>
@@ -157,13 +142,6 @@ const Signup = () => {
                       name="imageUrl"
                       placeholder="Enter ImgURL"
                       className="input input-bordered w-full bg-zinc-700"
-                      //value={postInputs.email}
-                      onChange={() => {
-                        // setPostInputs({
-                        //   ...postInputs, 
-                        //   email:e.target.value
-                        // })
-                      }}
                     />
                 </label>
                 <label className="form-control w-full">

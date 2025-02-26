@@ -5,7 +5,7 @@ import { User } from "../models/userSchema";
 
 export const userRouter = express.Router();
 
-const USER_SAVE_DATA = ["firstName", "lastName","gender","imgUrl","skills","age"]
+const USER_SAVE_DATA = ["firstName", "lastName","gender","imgUrl","skills","age","about"]
 
 userRouter.get("/connections",authMiddleware ,async(req:CustomRequest, res) => {
   const userId = req.decoded?._id
@@ -25,7 +25,6 @@ userRouter.get("/connections",authMiddleware ,async(req:CustomRequest, res) => {
       else{
         return row.fromUserId
       }
-      // row.fromUserId
     })
 
     if(!connections){
@@ -34,7 +33,7 @@ userRouter.get("/connections",authMiddleware ,async(req:CustomRequest, res) => {
     if(connections.length < 1){
       res.json({message:"No Pending Requests!"})
     } else{
-      res.json({data: data})
+      res.json({data})
     }
 
   } catch (error) {

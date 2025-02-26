@@ -23,3 +23,13 @@ export interface FeedData{
     }
   ]
 }
+
+export interface connectionData{
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    gender?: string;
+    imgUrl?: string;
+    skills?: string[];
+    about?: string;
+}

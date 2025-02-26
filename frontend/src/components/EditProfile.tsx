@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useActionState } from "react"
+import { useActionState, useState } from "react"
 import { SkillsInput } from "./SkillInput"
 import { useAppDispatch, useAppSelector } from "../hook"
 import axios from "axios";
@@ -8,6 +8,7 @@ import { addUser } from "../features/user/userSlice";
 
 const EditProfile = () => {
   const user = useAppSelector((store) => store.user.data?.userData);
+  const [about, setAbout] = useState(user?.about || "");
   const dispatch = useAppDispatch();
   const handlesubmit = async (_previousData:any, formData:FormData) =>{
     const payload = {
@@ -15,8 +16,8 @@ const EditProfile = () => {
       lastName: formData.get("lastName") as string,
       gender: formData.get("gender") as "male" | "female",
       skills: formData.getAll("skills") as string[],
-      about: formData.get("about") as string,
       imgUrl: formData.get("imgUrl") as string,
+      about: formData.get("about")?.toString() || "",
     };
   
     try {
@@ -53,13 +54,6 @@ const EditProfile = () => {
                   defaultValue={user?.firstName}
                   placeholder="Enter FirstName"
                   className="input input-bordered w-full bg-zinc-700"
-                  //value={postInputs.email}
-                  onChange={() => {
-                    // setPostInputs({
-                    //   ...postInputs, 
-                    //   email:e.target.value
-                    // })
-                  }}
                 />
               </label>
               <label className="form-control w-full">
@@ -72,10 +66,6 @@ const EditProfile = () => {
                   defaultValue={user?.lastName}
                   placeholder="Enter LastName"
                   className="input input-bordered w-full bg-zinc-700"
-                  //value={postInputs.password}
-                  // onChange={(e) => setPostInputs({
-                  //   ...postInputs,
-                  //   password:e.target.value})}
                 />
               </label>
             </div>
@@ -84,8 +74,8 @@ const EditProfile = () => {
                 <div className="label">
                   <span className="label-text text-white">Gender</span>
                 </div>
-                <select className="select select-bordered w-full bg-zinc-700" name="gender" defaultValue={user?.gender}>
-                  <option  disabled selected>Select gender</option>
+                <select className="select select-bordered w-full bg-zinc-700" name="gender" >
+                  <option defaultValue={user?.gender}  disabled selected>Select gender</option>
                   <option>male</option>
                   <option>female</option>
                 </select>
@@ -100,10 +90,6 @@ const EditProfile = () => {
                   defaultValue={user?.age}
                   placeholder="Enter your age"
                   className="input input-bordered w-full bg-zinc-700"
-                  //value={postInputs.password}
-                  // onChange={(e) => setPostInputs({
-                  //   ...postInputs,
-                  //   password:e.target.value})}
                 />
               </label>
             </div>
@@ -114,24 +100,23 @@ const EditProfile = () => {
                 </div>
                 <input
                   type="text"
-                  name="imageUrl"
+                  name="imgUrl"
                   defaultValue={user?.imgUrl}
                   placeholder="Enter ImgURL"
                   className="input input-bordered w-full bg-zinc-700"
-                  //value={postInputs.email}
-                  onChange={() => {
-                    // setPostInputs({
-                    //   ...postInputs, 
-                    //   email:e.target.value
-                    // })
-                  }}
                 />
             </label>
             <label className="form-control w-full">
                 <div className="label">
                   <span className="label-text text-white">About</span>
                 </div>
-                <textarea className="textarea textarea-primary bg-zinc-700" placeholder="About" name="about" defaultValue={user?.about}></textarea>
+                <textarea 
+                  className="textarea textarea-primary bg-zinc-700" 
+                  placeholder="About" 
+                  name="about" 
+                  value={about} 
+                  onChange={(e) => setAbout(e.target.value)}
+                />
             </label>
           </div>
           <div className="card-actions w-full justify-center">
@@ -139,7 +124,6 @@ const EditProfile = () => {
               disabled={isPending}
               type="submit"
               className="w-full btn btn-primary"
-              onClick={() => handlesubmit}
             >
               Edit
             </button>

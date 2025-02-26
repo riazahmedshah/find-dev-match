@@ -11,9 +11,9 @@ const Profile = () => {
           </h1>
         </div>
         <div className="max-w-4xl mx-auto md:px-0 px-2">
-          <div className="md:w-36 w-24 -my-10 border-2 border-white rounded-full">
+          <div className="md:w-28 w-24 -my-10 border-2 border-white rounded-full">
             <img
-              className="rounded-full"
+              className="rounded-full w-28 h-28 object-contain"
               src={user?.imgUrl}
               alt="profile-img"
             />

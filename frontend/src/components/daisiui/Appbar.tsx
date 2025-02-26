@@ -18,8 +18,8 @@ export const Appbar = () => {
     <div className="bg-zinc-950">
       <div className="navbar  md:px-16 px-2 py-4 max-w-[85rem] mx-auto">
           <div className="flex-1">
-            <Link to="/" className="font-sigmar text-3xl font-semibold tracking-widest  bg-[linear-gradient(60deg,_rgb(247,_149,_51),_rgb(243,_112,_85),_rgb(239,_78,_123),_rgb(161,_102,_171),_rgb(80,_115,_184),_rgb(16,_152,_173),_rgb(7,_179,_155),_rgb(111,_186,_130))]  bg-clip-text text-transparent">
-              fin<span className="text-4xl">dD</span>ev
+            <Link to="/" className="font-sigmar text-4xl font-semibold tracking-wider  bg-[linear-gradient(60deg,_rgb(247,_149,_51),_rgb(243,_112,_85),_rgb(239,_78,_123),_rgb(161,_102,_171),_rgb(80,_115,_184),_rgb(16,_152,_173),_rgb(7,_179,_155),_rgb(111,_186,_130))]  bg-clip-text text-transparent">
+              fin<span className="text-5xl">dD</span>ev
             </Link>
           </div>
           <div className="flex-none gap-2">
@@ -28,10 +28,11 @@ export const Appbar = () => {
                 <div
                   tabIndex={0}
                   role="button"
-                  className="btn btn-ghost btn-circle avatar"
+                  className="btn btn-ghost btn-circle avatar w-16"
                 >
-                  <div className="w-20 rounded-full">
+                  <div className="rounded-full">
                     <img
+                      className=""
                       alt="profile"
                       src={user?.imgUrl} 
                     />
@@ -56,6 +57,12 @@ export const Appbar = () => {
                   </li>
                   <li>
                     <div onClick={handleLogout}>logout</div>
+                  </li>
+                  <li>
+                    <Link to="/connections">connections</Link>
+                  </li>
+                  <li>
+                    <Link to="/requests"> requests</Link>
                   </li>
                 </ul>
               </div>
