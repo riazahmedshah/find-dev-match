@@ -1,18 +1,19 @@
-import { useAppSelector } from "../../hook";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-const Card = () => {
-  const user = useAppSelector((store) =>store.user.data?.userData)
+
+const Card = ({data}:any) => {
+  //console.log("Card", data);
   return (
     <div className="card shadow-sm">
       <figure>
         <img
           className="w-[15rem] h-[19rem] rounded-b-2xl"
-          src={user?.imgUrl}
+          src={data.imgUrl}
           alt="Shoes"
         />
       </figure>
       <div className="card-body absolute pt-60 ">
-        <h2 className="card-title font-bold text-white text-xl">{user?.firstName}</h2>
+        <h2 className="card-title font-bold text-white text-xl">{data.firstName}</h2>
       </div>
     </div>
   );

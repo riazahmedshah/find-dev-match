@@ -12,16 +12,13 @@ export interface UserData {
   }
 }
 export interface FeedData{
-  data:[
-    {
+      _id:string
       firstName:string;
       lastName?: string;
       age?: number;
       gender?: string;
       imgUrl?: string;
       skills?: string[]
-    }
-  ]
 }
 
 export interface connectionData{
