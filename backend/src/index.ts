@@ -3,6 +3,8 @@ import { mainRouter } from "./routes/index";
 import {connectDB} from "./config/db"
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import {createServer} from "http"
+import { socket } from "./utils/socket";
 const app = express();
 
 const PORT = 1100;
@@ -29,12 +31,17 @@ app.use((req, res, next) => {
 
 app.use("/", mainRouter);
 
+const server = createServer(app);
+
+socket(server);
+
+
 connectDB().then(() => {
   console.log("DataBase connected successfully!")
-  app.listen(PORT,() => {
+  server.listen(PORT,() => {
     console.log(`Serever is running on http://localhost:${PORT}`);
   })
 }).catch((err) => {
-  console.error("DataBase Connection Failed!");
+  console.error("DataBase Connection Failed!",err);
 });
 
