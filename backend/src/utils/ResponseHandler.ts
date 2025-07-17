@@ -32,4 +32,14 @@ export class ResponseHandler{
 
     res.status(400).json({ error })
   }
+
+  static error(res:Response, error:unknown){
+    if(error instanceof Error){
+      ResponseHandler.json(res, error,400)
+    } else{
+      ResponseHandler.json(res, {
+        Error:"INTERNAL_SERVER_ERROR"
+      },500)
+    }
+  }
 }
