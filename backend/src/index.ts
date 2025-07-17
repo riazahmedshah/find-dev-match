@@ -4,7 +4,7 @@ import {connectDB} from "./config/db"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import {createServer} from "http"
-import { socket } from "./utils/socket";
+import { socket } from "./config/socket";
 const app = express();
 
 const PORT = 1100;
