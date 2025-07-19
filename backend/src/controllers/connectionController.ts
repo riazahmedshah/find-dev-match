@@ -7,7 +7,7 @@ import { createRequest, findRequest, reviewRequest } from "../repositories/Conne
 
 export const sendConnectionRequest = async(req:CustomRequest,res:Response) => {
     const fromUserId = req.decoded?._id; 
-    const {success, data, error} =  await connectRequestTypes.safeParseAsync(req.params);
+    const {success, data, error} = connectRequestTypes.safeParse(req.params);
     if(!success){
         return ResponseHandler.zodError(res, error.errors);
     }

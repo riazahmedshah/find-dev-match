@@ -1,13 +1,7 @@
 import zod from "zod"
-import { findUserById } from "../repositories/UserRepository";
-
-const user_id_schema = zod.string().refine(async(id) => {
-  const doesUserExists = await findUserById(id);
-  return Boolean(doesUserExists)
-},"USER_NOT_FOUND");
 
 export const connectRequestTypes = zod.object({
-  toUserId:user_id_schema,
+  toUserId:zod.string(),
   status: zod.enum(["interested", "ignored"]),
 });
 

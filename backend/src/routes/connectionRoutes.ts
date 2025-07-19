@@ -6,5 +6,4 @@ export const connectionRouter = express.Router();
 
 
 connectionRouter.post("/send/:status/:toUserId", authMiddleware, sendConnectionRequest);
-
-connectionRouter.patch("/review/:status/:requestId", authMiddleware, reviewConnectionRequest)
+connectionRouter.patch("/review/:status/:requestId", authMiddleware, reviewConnectionRequest);

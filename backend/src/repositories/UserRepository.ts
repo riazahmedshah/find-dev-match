@@ -1,7 +1,9 @@
+import mongoose from "mongoose";
 import { User } from "../models/userSchema";
 import { createUserInput, updateUserInput } from "../schemas/userSchema";
 
 const USER_SAVE_DATA = ["firstName", "lastName","gender","imgUrl","skills","age","about"]
+type idType = mongoose.Types.ObjectId | undefined
 
 export async function createUser(data:createUserInput){
   const user = await User.create({
@@ -27,7 +29,7 @@ export async function findUserByEmail(email:string){
 
 export async function userFeed(
   hideFromFeed:Set<unknown>,
-  userId:string,
+  userId:idType,
   limit:number,
   skip:number
 ){
@@ -48,15 +50,24 @@ export async function userFeed(
   return feed
 }
 
-export async function findUserById(userId:string){
+export async function findUserById(userId:idType){
   const user = await User.findById(userId);
   return user
 }
 
 export async function updateUser(
-  userId:string,
+  userId:idType,
   data:updateUserInput
 ){
-  const updatedUser = await User.findByIdAndUpdate(userId, data);
-  return updatedUser;
+  const user = await User.findByIdAndUpdate(userId,{
+    firstName:data.firstName,
+    lastName:data.lastName,
+    age:data.age,
+    about:data.about,
+    gender:data.gender,
+    skills:data.skills,
+    imgUrl:data.profilePhoto
+
+  },{returnDocument:"after"});
+  return user;
 }

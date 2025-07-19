@@ -1,13 +1,11 @@
 import express from "express";
-// import { authRouter } from "./authRouter";
-import { profileRouter } from "./profileRouter"
-import { connectionRouter } from "./connectionRouter";
-import { userRouter } from "./userRouter";
+
+import { authRouter } from "./authRoutes";
+import { userRouter } from "./userRoutes";
+import { connectionRouter } from "./connectionRoutes";
 
 export const mainRouter = express.Router();
 
-
-// mainRouter.use("/auth",authRouter);
-mainRouter.use("/profile",profileRouter);
-mainRouter.use("/request",connectionRouter);
+mainRouter.use("/auth",authRouter);
 mainRouter.use("/user",userRouter);
+mainRouter.use("/request",connectionRouter);

@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", mainRouter);
+app.use("/api", mainRouter);
 
 const server = createServer(app);
 
